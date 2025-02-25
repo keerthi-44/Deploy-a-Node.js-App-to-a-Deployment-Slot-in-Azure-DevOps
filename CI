@@ -1,0 +1,62 @@
+Setting Up an Azure DevOps Project for Node.js and Express
+In this guide, we'll walk through setting up a project in Azure DevOps, cloning a repository, configuring a service connection, and setting up an agent to run our pipelines.
+
+Step 1: Create a New Project
+First, create a new project named Awesome Project in Azure DevOps.
+
+Step 2: Clone the Repository
+Clone the following repository into your newly created project:
+
+sh
+Copy
+Edit
+git clone https://github.com/pluralsight-cloud/AZ-400-Designing-and-Implementing-Microsoft-DevOps-Solutions.git
+Once cloned, set the default branch to node-express.
+
+Step 3: Set Up Azure Resource Manager Service Connection
+Navigate to Project Settings > Service Connections, and select Azure Resource Manager as the service connection type.
+
+Configure Subscription Details
+Select App registration or managed identity (manual) for the identity type.
+Choose Secret as the credential type.
+Set the Subscription ID and Subscription Name based on the Get-AzSubscription command output.
+Click Next to proceed.
+Enter Application Credentials
+Provide the Application (Client) ID and Directory (Tenant) ID.
+Enter the Client Secret and click Verify.
+Name the service connection and check Grant access permission to all pipelines.
+Click Verify and Save.
+Step 4: Retrieve Your Azure Subscription
+Run the following PowerShell command to get your Azure subscription details:
+
+powershell
+Copy
+Edit
+Get-AzSubscription
+This will return your subscription details. Example output:
+
+plaintext
+Copy
+Edit
+TenantId: 84f1e4ea-8554-43e1-8709-f0b8589ea118  
+
+Name: P5-Real Hands-On Labs  
+Id: 80ea84e8-afce-4851-928a-9e2219724c69  
+State: Enabled  
+Use these details when configuring your service connection.
+
+Step 5: Configure Pipeline Security
+Navigate to Project Settings > Pipelines > Agent Pools and verify pipeline permissions. Ensure that your project is listed under allowed pipelines.
+
+Step 6: Configure the Azure DevOps Agent
+To set up a self-hosted agent, download and configure the agent package:
+
+sh
+Copy
+Edit
+wget https://vstsagentpackage.azureedge.net/agent/4.251.0/vsts-agent-linux-x64-4.251.0.tar.gz
+tar zxvf vsts-agent-linux-x64-4.251.0.tar.gz
+cd vsts-agent-linux-x64-4.251.0
+./config.sh
+./run.sh
+This will configure and start your agent, allowing it to execute pipeline jobs.
